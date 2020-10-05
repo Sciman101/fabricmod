@@ -1,16 +1,16 @@
 {
   "schemaVersion": 1,
-  "id": "modid",
+  "id": "scimod",
   "version": "${version}",
 
-  "name": "Example Mod",
+  "name": "Sciman's Test Mod",
   "description": "This is an example description! Tell everyone what your mod is about!",
   "authors": [
-    "Me!"
+    "Sciman101"
   ],
   "contact": {
-    "homepage": "https://fabricmc.net/",
-    "sources": "https://github.com/FabricMC/fabric-example-mod"
+    "homepage": "https://sciman.info",
+    "sources": "https://github.com/Sciman101/fabricmod"
   },
 
   "license": "CC0-1.0",
