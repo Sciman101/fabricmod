@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "id": "scimod",
+  "id": "sciman",
   "version": "${version}",
 
   "name": "Sciman's Test Mod",

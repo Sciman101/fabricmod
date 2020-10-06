@@ -1,0 +1,12 @@
+{
+  "enchantment.sciman.veinminer": "Veinminer",
+  "item.sciman.tool_wood": "Wooden Wand",
+  "item.sciman.tool_stone": "Stone Wand",
+  "item.sciman.tool_iron": "Iron Wand",
+  "item.sciman.tool_gold": "Gold Wand",
+  "item.sciman.tool_diamond": "Diamond Wand",
+  "item.sciman.tool_gold_jeweled": "Jeweled Gold Wand",
+  "item.sciman.tool_diamond_jeweled": "Jeweled Diamond Wand",
+  "item.sciman.tool_gold_tainted": "Tainted Gold Wand",
+  "item.sciman.tool_diamond_tainted": "Tainted Diamond Wand"
+}

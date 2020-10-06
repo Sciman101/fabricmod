@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:smithing",
+  "base": {
+    "item": "sciman:tool_gold"
+  },
+  "addition": {
+    "item": "minecraft:emerald"
+  },
+  "result": {
+    "item": "sciman:tool_gold_jeweled"
+  }
+}
+
