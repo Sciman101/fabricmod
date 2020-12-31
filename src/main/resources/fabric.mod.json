@@ -1,9 +1,15 @@
 {
   "schemaVersion": 1,
-  "id": "sciman",
+  "id": "skilltable",
   "version": "${version}",
 
-  "name": "Sciman's Test Mod",
+  "custom": {
+    "cardinal-components": [
+      "skilltable:speed_boost"
+    ]
+  },
+
+  "name": "Skilltable",
   "description": "This is an example description! Tell everyone what your mod is about!",
   "authors": [
     "Sciman101"
@@ -19,11 +25,16 @@
   "environment": "*",
   "entrypoints": {
     "main": [
-      "net.fabricmc.example.ExampleMod"
+      "info.sciman.skilltable.SkillTableMod"
+    ],
+    "client": [
+      "info.sciman.skilltable.SkillTableClientMod"
+    ],
+    "cardinal-components-entity": [
+      "info.sciman.skilltable.skills.Skills"
     ]
   },
   "mixins": [
-    "modid.mixins.json"
   ],
 
   "depends": {

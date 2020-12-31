@@ -1,7 +1,0 @@
-{
-  "parent": "item/generated",
-  "textures": {
-    "layer0": "sciman:item/tool_gold",
-    "layer1": "sciman:item/emerald_charm"
-  }
-}

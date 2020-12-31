@@ -10,6 +10,13 @@ archivesBaseName = project.archives_base_name
 version = project.mod_version
 group = project.maven_group
 
+repositories {
+	maven {
+		name = "Ladysnake Libs"
+		url = "https://dl.bintray.com/ladysnake/libs"
+	}
+}
+
 dependencies {
     minecraft "com.mojang:minecraft:1.16.3"
     mappings "net.fabricmc:yarn:1.16.3+build.27:v2"
@@ -17,6 +24,10 @@ dependencies {
             
     //Fabric api
     modImplementation "net.fabricmc.fabric-api:fabric-api:0.22.1+build.409-1.16"
+
+	// Replace modImplementation with modApi if you expose components in your own API
+	modImplementation "io.github.onyxstudios.Cardinal-Components-API:cardinal-components-base:2.7.10"
+	modImplementation "io.github.onyxstudios.Cardinal-Components-API:cardinal-components-entity:2.7.10"
 }
 
 processResources {

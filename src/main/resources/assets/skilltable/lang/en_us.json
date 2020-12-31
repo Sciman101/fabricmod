@@ -1,0 +1,13 @@
+{
+  "block.skilltable.skill_table": "Skill Table",
+  "container.skills": "Skill Table",
+
+  "skilltable.misc.level_max": "-Max Level-",
+  "skilltable.misc.upgrade_cost": "Cost to upgrade: ",
+  "skilltable.misc.level_current": "Level ",
+  "skilltable.misc.on_level_up": " increased to level ",
+
+  "skill.speed": "Speed Boost",
+  "skill.jump": "Jump Boost",
+  "skill.speed.tooltip": "Move 5% faster"
+}
