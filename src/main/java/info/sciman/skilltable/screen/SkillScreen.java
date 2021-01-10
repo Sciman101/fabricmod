@@ -1,14 +1,19 @@
 package info.sciman.skilltable.screen;
 
 import com.mojang.blaze3d.systems.RenderSystem;
+import info.sciman.skilltable.SkillTableMod;
 import info.sciman.skilltable.skills.Skill;
 import info.sciman.skilltable.skills.Skills;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraft.client.gui.screen.ingame.*;
+import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
+import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
+import net.minecraft.client.gui.screen.ingame.HandledScreen;
 import net.minecraft.client.gui.widget.ButtonWidget;
 import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
+import net.minecraft.network.PacketByteBuf;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.text.LiteralText;
 import net.minecraft.text.MutableText;
@@ -41,9 +46,17 @@ public class SkillScreen extends HandledScreen<ScreenHandler> {
             skillButtons[i] = this.addButton(new SkillButtonWidget(x+43, y+16 + i * 18, i, LiteralText.EMPTY, button -> {
                 if (button instanceof SkillButtonWidget) {
                     // Try and purchase skill upgrade. If we're successful, update the UI
-                    if (((SkillScreenHandler)handler).attemptPurchaseSkill(((SkillButtonWidget) button).index+skillIndexOffset)) {
-                        updateOffset();
-                    }
+                    int skillIndex = ((SkillButtonWidget) button).index+skillIndexOffset;
+                    PlayerEntity player = playerInventory.player;
+
+                    PacketByteBuf buf = PacketByteBufs.create();
+                    // Write relevant data
+                    buf.writeIdentifier(((SkillScreenHandler)getScreenHandler()).playerQualifiedSkills.get(skillIndex).getIdentifier()); // Identify the skill
+                    // Send the packet
+                    ClientPlayNetworking.send(SkillTableMod.REQUEST_SKILL_UPGRADE_PACKET_ID,buf);
+
+                    // Refresh
+                    updateOffset();
                 }
             }));
         }

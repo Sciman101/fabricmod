@@ -3,23 +3,16 @@ package info.sciman.skilltable.screen;
 import info.sciman.skilltable.SkillTableMod;
 import info.sciman.skilltable.skills.Skill;
 import info.sciman.skilltable.skills.Skills;
-import net.fabricmc.fabric.api.screenhandler.v1.ScreenHandlerRegistry;
-import net.minecraft.block.Blocks;
-import net.minecraft.client.gui.screen.ingame.MerchantScreen;
-import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.enchantment.EnchantmentLevelEntry;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.inventory.SimpleInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
-import net.minecraft.screen.*;
+import net.minecraft.screen.ScreenHandler;
+import net.minecraft.screen.ScreenHandlerContext;
 import net.minecraft.screen.slot.Slot;
-import net.minecraft.text.TranslatableText;
-import net.minecraft.util.registry.Registry;
 
-import java.util.Collection;
 import java.util.List;
 
 public class SkillScreenHandler extends ScreenHandler {
@@ -86,30 +79,6 @@ public class SkillScreenHandler extends ScreenHandler {
         this.context.run((world, blockPos) -> {
             this.dropInventory(player, player.world, this.inventory);
         });
-    }
-
-    // Called when the player tries to get a skill
-    public boolean attemptPurchaseSkill(int index) {
-        // Get the targeted skill and the player's level
-        Skill skill = playerQualifiedSkills.get(index);
-        int playerLevel = Skills.getCurrentLevel(player,skill);
-        // Make sure we can actually get this
-        if (playerLevel < skill.getMaxLevel()) {
-            int levelCost = skill.getLevelCost(playerLevel);
-            if (player.experienceLevel >= levelCost || player.isCreative()) {
-                // Remove levels
-                if (!player.isCreative()) player.addExperienceLevels(-levelCost);
-                // Increment skill score
-                Skills.upgradeSkill(player,skill);
-                // Send message
-                player.sendMessage(new TranslatableText(skill.getTranslationKey()).append(new TranslatableText("skilltable.misc.on_level_up").append((playerLevel+1)+"!")),false);
-                // Find list of valid skills again
-                findQualifiedSkills();
-
-                return true;
-            }
-        }
-        return false;
     }
 
     @Override

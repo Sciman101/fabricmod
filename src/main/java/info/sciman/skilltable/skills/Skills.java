@@ -6,26 +6,25 @@ import dev.onyxstudios.cca.api.v3.entity.EntityComponentFactoryRegistry;
 import dev.onyxstudios.cca.api.v3.entity.EntityComponentInitializer;
 import info.sciman.skilltable.SkillTableMod;
 import nerdhub.cardinal.components.api.util.RespawnCopyStrategy;
-import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
-import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
+import net.minecraft.entity.attribute.EntityAttributeModifier;
+import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.network.PacketByteBuf;
-import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Identifier;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 public final class Skills implements EntityComponentInitializer {
 
     // Registry to hold all skills
     private static final HashMap<Identifier,Skill> skillRegistry = new HashMap<>();
 
-    public static final Skill SKILL_SPEED = new Skill(3, new int[]{2,5,10});
+    public static final Skill SKILL_SPEED = new Skill(3, new int[]{2,5,10}).addAttributeModifier(EntityAttributes.GENERIC_MOVEMENT_SPEED,"dfa8594e-c15f-44fc-b1c6-7cbb3afc9c06",0.2, EntityAttributeModifier.Operation.MULTIPLY_TOTAL);
     public static final Skill SKILL_JUMP = new Skill(3, new int[]{2,5,10});
     public static final Skill SKILL_HASTE = new Skill(2, new int[]{4,7});
-    public static final Skill SKILL_TEST = new Skill(2, new int[]{2,5});
     public static final Skill SKILL_VEINMINER = new Skill(2, new int[]{15,30}).addPrerequisite(new Skill.SkillPrerequisite(SKILL_HASTE,2));
-    public static final Skill SKILL_DOUBLE_JUMP = new Skill(1, new int[]{20}).addPrerequisite(new Skill.SkillPrerequisite(SKILL_JUMP,3));
 
     // Get array of all skills
     public static HashMap<Identifier,Skill> getSkillRegistry() {
@@ -54,10 +53,8 @@ public final class Skills implements EntityComponentInitializer {
         register(SkillTableMod.id("speed"),SKILL_SPEED);
         register(SkillTableMod.id("jump"),SKILL_JUMP);
         register(SkillTableMod.id("haste"),SKILL_HASTE);
-        register(SkillTableMod.id("test"),SKILL_TEST);
 
         register(SkillTableMod.id("veinminer"),SKILL_VEINMINER);
-        register(SkillTableMod.id("double_jump"),SKILL_DOUBLE_JUMP);
     }
 
     public static void register(Identifier id, Skill skill) {
@@ -81,10 +78,26 @@ public final class Skills implements EntityComponentInitializer {
     public static int getCurrentLevel(PlayerEntity player, Skill skill) {
         return SKILL_LIST.get(player).getValue(skill.getIdentifier());
     }
-    public static void upgradeSkill(PlayerEntity player, Skill skill) {
-        SkillComponent comp = SKILL_LIST.get(player);
-        int desiredLevel = comp.getValue(skill.getIdentifier()) + 1;
-        comp.setValue(skill.getIdentifier(), desiredLevel);
+
+    // Try to upgrade a skill for a player, assuming they meet the requirements
+    public static boolean tryUpgradeSkill(PlayerEntity player, Skill skill) {
+        int playerLevel = getCurrentLevel(player,skill);
+        // Make sure we can actually get this
+        if (playerLevel < skill.getMaxLevel()) {
+            int levelCost = skill.getLevelCost(playerLevel);
+            if (player.experienceLevel >= levelCost || player.isCreative()) {
+                // Remove levels
+                if (!player.isCreative()) player.addExperienceLevels(-levelCost);
+                // Increment skill score
+                SkillComponent comp = SKILL_LIST.get(player);
+                comp.setValue(skill.getIdentifier(), playerLevel+1);
+
+                // Send message
+                player.sendMessage(new TranslatableText(skill.getTranslationKey()).append(new TranslatableText("skilltable.misc.on_level_up").append((playerLevel+1)+"!")),false);
+                return true;
+            }
+        }
+        return false;
     }
 
 }

@@ -9,5 +9,11 @@
 
   "skill.speed": "Speed Boost",
   "skill.jump": "Jump Boost",
-  "skill.speed.tooltip": "Move 5% faster"
+  "skill.haste": "Miner's Endurance",
+  "skill.veinminer": "Veinminer",
+
+  "skill.speed.tooltip": "Move 5% faster",
+  "skill.jump.tooltip": "Jump 5% higher",
+  "skill.haste.tooltip": "Mine 5% faster",
+  "skill.veinminer.tooltip": "Mine all adjacent ores"
 }
