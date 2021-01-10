@@ -32,7 +32,7 @@ public class SkillComponent implements IdentifierListInt, AutoSyncedComponent {
     public void setValue(Identifier id, int val) {
         if (skillLevels.containsKey(id)) {
             skillLevels.put(id,val);
-            Skills.SKILL_LIST.sync(provider);
+            Skills.SKILL_LIST.sync(this.provider);
         }
     }
 

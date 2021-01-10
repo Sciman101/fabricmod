@@ -18,12 +18,12 @@ repositories {
 }
 
 dependencies {
-    minecraft "com.mojang:minecraft:1.16.3"
-    mappings "net.fabricmc:yarn:1.16.3+build.27:v2"
-    modImplementation "net.fabricmc:fabric-loader:0.10.0+build.208"
-            
-    //Fabric api
-    modImplementation "net.fabricmc.fabric-api:fabric-api:0.22.1+build.409-1.16"
+	minecraft "com.mojang:minecraft:1.16.4"
+	mappings "net.fabricmc:yarn:1.16.4+build.9:v2"
+	modImplementation "net.fabricmc:fabric-loader:0.10.8"
+
+	//Fabric api
+	modImplementation "net.fabricmc.fabric-api:fabric-api:0.29.3+1.16"
 
 	// Replace modImplementation with modApi if you expose components in your own API
 	modImplementation "io.github.onyxstudios.Cardinal-Components-API:cardinal-components-base:2.7.10"

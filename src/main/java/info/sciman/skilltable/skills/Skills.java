@@ -6,7 +6,11 @@ import dev.onyxstudios.cca.api.v3.entity.EntityComponentFactoryRegistry;
 import dev.onyxstudios.cca.api.v3.entity.EntityComponentInitializer;
 import info.sciman.skilltable.SkillTableMod;
 import nerdhub.cardinal.components.api.util.RespawnCopyStrategy;
+import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
+import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.network.PacketByteBuf;
+import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.Identifier;
 
 import java.util.*;
@@ -79,7 +83,8 @@ public final class Skills implements EntityComponentInitializer {
     }
     public static void upgradeSkill(PlayerEntity player, Skill skill) {
         SkillComponent comp = SKILL_LIST.get(player);
-        comp.setValue(skill.getIdentifier(),comp.getValue(skill.getIdentifier())+1);
+        int desiredLevel = comp.getValue(skill.getIdentifier()) + 1;
+        comp.setValue(skill.getIdentifier(), desiredLevel);
     }
 
 }
